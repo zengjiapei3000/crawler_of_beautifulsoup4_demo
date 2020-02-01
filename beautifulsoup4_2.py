@@ -1,4 +1,3 @@
-import os
 import urllib.request
 from bs4 import BeautifulSoup
 
@@ -14,19 +13,18 @@ class Scraper:
         response = urllib.request.urlopen(self.site)
         html = response.read()
         parser = "html.parser"
-        sp = BeautifulSoup(html, parser)
-        for tag in sp.find_all("a"):
-            url = tag.get("href")
-            if url is None:
-                continue
-            if "html" in url:
-                print("\n" + url)
-                with open('scrape.txt', 'a') as f:
-                    f = f.write("\n" + url + "\n")
+        soup = BeautifulSoup(html, 'html.parser')
+        with open('scrape.txt', 'a') as f:
+            for tag in soup.find_all("a"):
+                url = tag.get("href")
+                if url is None:
+                    continue
+                if "html" in url:
+                    print("\n" + url)
+                    f.write(url + "\n")
 
 
-news = "https://news.sina.com.cn/"
-Scraper(news).scrape()
+Scraper("https://news.sina.com.cn/").scrape()
 
 
 

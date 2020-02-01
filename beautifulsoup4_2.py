@@ -1,3 +1,4 @@
+import os
 import urllib.request
 from bs4 import BeautifulSoup
 
@@ -20,6 +21,13 @@ class Scraper:
                 continue
             if "html" in url:
                 print("\n" + url)
+                with open('scrape.txt', 'a') as f:
+                    f = f.write("\n" + url + "\n")
 
-news = "https://news.google.com/"
+
+news = "https://news.sina.com.cn/"
 Scraper(news).scrape()
+
+
+
+
